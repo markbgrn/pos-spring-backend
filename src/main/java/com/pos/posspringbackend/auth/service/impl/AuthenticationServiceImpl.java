@@ -1,5 +1,6 @@
 package com.pos.posspringbackend.auth.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pos.posspringbackend.auth.request.AuthenticationRequest;
 import com.pos.posspringbackend.auth.request.RegisterRequest;
 import com.pos.posspringbackend.auth.response.AuthenticationResponse;
@@ -12,11 +13,16 @@ import com.pos.posspringbackend.user.enumerated.Role;
 import com.pos.posspringbackend.user.entity.User;
 import com.pos.posspringbackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -39,9 +45,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
         User saveduser = userRepository.save(user);
         String jwtToken = jwtService.generateToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
         savedUserToken(saveduser, jwtToken);
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 
@@ -55,10 +63,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
         User user = userRepository.findUserByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("User not found"));
         String jwtToken = jwtService.generateToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
         revokedAllUserToken(user);
         savedUserToken(user, jwtToken);
         return AuthenticationResponse.builder()
-                .token(jwtToken)
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 
@@ -81,5 +91,29 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .expired(false)
                 .build();
         tokenRepository.save(token);
+    }
+
+    public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        final String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        final String refreshToken;
+        final String userEmail;
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            return;
+        }
+        refreshToken = authorizationHeader.substring(7);
+        userEmail = jwtService.extractUserEmail(refreshToken);
+        if(userEmail != null) {
+            User user = this.userRepository.findUserByEmail(userEmail).orElseThrow(() -> new RuntimeException("User not found"));
+            if (jwtService.isTokenValid(refreshToken, user)) {
+                String accessToken = jwtService.generateToken(user);
+                revokedAllUserToken(user);
+                savedUserToken(user, accessToken);
+                AuthenticationResponse authenticationResponse = AuthenticationResponse.builder()
+                        .accessToken(accessToken)
+                        .refreshToken(refreshToken)
+                        .build();
+                new ObjectMapper().writeValue(response.getOutputStream(), authenticationResponse);
+            }
+        }
     }
 }
