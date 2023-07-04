@@ -12,9 +12,11 @@ public enum Permission {
     INVENTORY_CLERK_READ("inventory_clerk:read"),
     INVENTORY_CLERK_CREATE("inventory_clerk:create"),
     INVENTORY_CLERK_UPDATE("inventory_clerk:update"),
+    INVENTORY_CLERK_DELETE("inventory_clerk:delete"),
     CASHIER_READ("cashier:read"),
     CASHIER_CREATE("cashier:create"),
-    CASHIER_UPDATE("cashier:update");
+    CASHIER_UPDATE("cashier:update"),
+    CASHIER_DELETE("cashier:delete");
 
     @Getter
     private final String permission;

@@ -41,7 +41,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.ADMIN)
+                .role(request.getRole())
                 .build();
         User saveduser = userRepository.save(user);
         String jwtToken = jwtService.generateToken(user);
@@ -61,7 +61,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                         request.getPassword()
                 )
         );
-        User user = userRepository.findUserByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new RuntimeException("User not found"));
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
         revokedAllUserToken(user);
@@ -103,7 +103,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         refreshToken = authorizationHeader.substring(7);
         userEmail = jwtService.extractUserEmail(refreshToken);
         if(userEmail != null) {
-            User user = this.userRepository.findUserByEmail(userEmail).orElseThrow(() -> new RuntimeException("User not found"));
+            User user = this.userRepository.findByEmail(userEmail).orElseThrow(() -> new RuntimeException("User not found"));
             if (jwtService.isTokenValid(refreshToken, user)) {
                 String accessToken = jwtService.generateToken(user);
                 revokedAllUserToken(user);
