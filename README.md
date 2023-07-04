@@ -18,9 +18,11 @@ This is a simple sales and inventory management system with POS and RESTful API.
 4. Open project in your favorite code editor e.g Intellij or Eclipse.
 5. Setup database in your local machine.
 ## Database Setup
-1. Download and install Mongodb Community Server
-   > you can download MongoDB here: https://www.mongodb.com/try/download/community
-2. Setup MongoDB follow the installation process.
+1. cd on the project directory.
+2. cd on Docker directory.
+3. from docker directory run the command
+   > docker-compose up -d
+4. check if the database is running on docker desktop.
 
 ## Contributors
 - Ruby Rose Roxas
