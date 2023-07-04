@@ -5,8 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -15,4 +14,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name= "tbl_product")
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer prodId;
+    private String prodName;
+    private String prodDesc;
+    private Double unitPrice;
+    private Integer quantity;
+    private Integer categoryId;
 }
