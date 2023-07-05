@@ -1,5 +1,6 @@
 package com.pos.posspringbackend.product.entity;
 
+import com.pos.posspringbackend.category.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,5 +22,7 @@ public class Product {
     private String prodDesc;
     private Double unitPrice;
     private Integer quantity;
-    private Integer categoryId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "categoryID")
+    private Category category;
 }
