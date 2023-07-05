@@ -17,8 +17,11 @@ import javax.persistence.*;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="employeeID")
     private Integer employeeId;
+    @Column(name="fname")
     private String fName;
+    @Column(name="lname")
     private String lName;
     private String address;
     private String username;

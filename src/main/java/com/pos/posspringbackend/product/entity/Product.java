@@ -20,6 +20,7 @@ public class Product {
     private Integer prodId;
     private String prodName;
     private String prodDesc;
+    @Column(name="unitPrice")
     private Double unitPrice;
     private Integer quantity;
     @ManyToOne(fetch = FetchType.LAZY)
