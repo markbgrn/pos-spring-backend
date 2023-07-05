@@ -33,7 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .password(employee.getPassword())
                 .userType(employee.getUserType())
                 .build();
-        return savedEmployee;
+        return employeeRepository.save(savedEmployee);
     }
 
     @Override
