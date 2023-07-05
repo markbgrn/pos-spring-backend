@@ -12,7 +12,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Builder
 @Document(collection = "category")
-public class Category {
+public class CategoryDocument {
     @Id
     private String id;
     private String name;
