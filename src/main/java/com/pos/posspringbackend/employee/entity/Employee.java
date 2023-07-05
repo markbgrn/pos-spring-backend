@@ -20,9 +20,9 @@ public class Employee {
     @Column(name="employeeID")
     private Integer employeeId;
     @Column(name="fname")
-    private String fName;
+    private String firstName;
     @Column(name="lname")
-    private String lName;
+    private String lastName;
     private String address;
     private String username;
     private String password;

@@ -28,6 +28,12 @@ public class EmployeeController {
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Employee> findById(@PathVariable Integer id) {
+        Employee employee = employeeService.findById(id);
+        return new ResponseEntity<>(employee, HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Employee> update(
             @PathVariable Integer id, @RequestBody Employee employee

@@ -26,8 +26,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee createEmployee(Employee employee) {
         Employee savedEmployee = Employee.builder()
                 .employeeId(employee.getEmployeeId())
-                .fName(employee.getFName())
-                .lName(employee.getLName())
+                .firstName(employee.getFirstName())
+                .lastName(employee.getLastName())
                 .address(employee.getAddress())
                 .username(employee.getUsername())
                 .password(employee.getPassword())
@@ -51,8 +51,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                         "Employee with id: " + id + " not found"
                 )
         );
-        savedEmployee.setFName(employee.getFName());
-        savedEmployee.setLName(employee.getLName());
+        savedEmployee.setFirstName(employee.getFirstName());
+        savedEmployee.setLastName(employee.getLastName());
         savedEmployee.setAddress(employee.getAddress());
         savedEmployee.setUsername(employee.getUsername());
         savedEmployee.setPassword(employee.getPassword());
