@@ -24,7 +24,7 @@ public class OrderDocument {
     @JoinColumn(name="customerID")
     private Customer customer;
     @ManyToOne(fetch=FetchType.LAZY)
-    @Column(name="employeeID")
+    @JoinColumn(name="employeeID")
     private Employee employee;
     @Column(name="orderdate")
     private Date orderDate;
