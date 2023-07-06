@@ -2,6 +2,7 @@ package com.pos.posspringbackend.config;
 
 import com.pos.posspringbackend.token.repository.TokenRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,7 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
-        final String authorizationHeader = request.getHeader("Authorization");
+        final String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String jwtToken;
         final String userEmail;
         if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
