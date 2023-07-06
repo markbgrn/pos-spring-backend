@@ -24,8 +24,8 @@ public class OrderServiceImpl implements OrderService {
     public OrderDocument createOrder(OrderDocument orderDocument) {
         OrderDocument savedOrder = OrderDocument.builder()
                 .orderId(orderDocument.getOrderId())
-                .customerId(orderDocument.getCustomerId())
-                .employeeId(orderDocument.getEmployeeId())
+                .customer(orderDocument.getCustomer())
+                .employee(orderDocument.getEmployee())
                 .orderDate(orderDocument.getOrderDate())
                 .build();
         return orderRepository.save(savedOrder);
@@ -46,8 +46,8 @@ public class OrderServiceImpl implements OrderService {
                         "Order with id: " + id + " not found"
                 )
         );
-        savedOrder.setCustomerId(orderDocument.getCustomerId());
-        savedOrder.setEmployeeId(orderDocument.getEmployeeId());
+        savedOrder.setCustomer(orderDocument.getCustomer());
+        savedOrder.setEmployee(orderDocument.getEmployee());
         savedOrder.setOrderDate(orderDocument.getOrderDate());
         return orderRepository.save(savedOrder);
     }
