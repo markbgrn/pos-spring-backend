@@ -2,10 +2,8 @@ package com.pos.posspringbackend.user.enumerated;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.var;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
