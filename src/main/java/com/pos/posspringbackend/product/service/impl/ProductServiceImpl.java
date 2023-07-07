@@ -36,23 +36,17 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findById(Integer id) {
         Optional<Product> product = productRepository.findById(id);
-        return product.orElseThrow(() -> new ResourceNotFoundException(
-                "Product with id: " + id + " not found"
-        ));
+        return product.orElseThrow(() -> new ResourceNotFoundException("Product with id: " + id + " not found"));
     }
 
     @Override
     public Product update(Integer id, Product product) {
-        Product savedProduct = productRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException(
-                        "Product with id " + id + " not found"
-                )
-        );
+        Product savedProduct = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " not found"));
         savedProduct.setProdName(product.getProdName());
         savedProduct.setProdDesc(product.getProdDesc());
+        savedProduct.setCategory(product.getCategory());
         savedProduct.setUnitPrice(product.getUnitPrice());
         savedProduct.setQuantity(product.getQuantity());
-        savedProduct.setCategory(product.getCategory());
         return productRepository.save(savedProduct);
     }
 
