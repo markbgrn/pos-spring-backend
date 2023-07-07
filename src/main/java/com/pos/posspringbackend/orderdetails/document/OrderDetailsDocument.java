@@ -19,13 +19,11 @@ import javax.persistence.*;
 @IdClass(OrderDetailsId.class)
 public class OrderDetailsDocument {
     @Id
-    @ManyToOne
-    @JoinColumn(name="orderID")
-    private OrderDocument order;
+    @Column(name="orderID")
+    private Integer orderId;
     @Id
-    @ManyToOne
-    @JoinColumn(name="prodID")
-    private Product product;
+    @Column(name="prodID")
+    private Integer productId;
     @Column(name="unitPrice")
     private Double unitPrice;
     private Integer quantity;
