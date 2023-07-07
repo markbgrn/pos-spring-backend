@@ -1,11 +1,10 @@
 package com.pos.posspringbackend.customer.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.proxy.HibernateProxy;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Data
 @AllArgsConstructor
@@ -19,9 +18,9 @@ public class Customer {
     @Column(name="customerID")
     private Integer customerId;
     @Column(name="fname")
-    private String fName;
+    private String firstName;
     @Column(name="lname")
-    private String lName;
+    private String lastName;
     private String address;
     private String contact;
     private Integer age;

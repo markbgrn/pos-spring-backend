@@ -26,8 +26,8 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer createCustomer(Customer customer) {
         Customer savedCustomer = Customer.builder()
                 .customerId(customer.getCustomerId())
-                .fName(customer.getFName())
-                .lName(customer.getLName())
+                .firstName(customer.getFirstName())
+                .lastName(customer.getLastName())
                 .address(customer.getAddress())
                 .contact(customer.getContact())
                 .age(customer.getAge())
@@ -38,20 +38,14 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer findById(Integer id) {
         Optional<Customer> customer = customerRepository.findById(id);
-        return customer.orElseThrow(() -> new ResourceNotFoundException(
-                "Customer with id: " + id + " not found"
-        ));
+        return customer.orElseThrow(() -> new ResourceNotFoundException("Customer with id: " + id + " not found."));
     }
 
     @Override
     public Customer updateCustomer(Integer id, Customer customer) {
-        Customer savedCustomer = customerRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException(
-                        "Customer with id: " + id + " not found"
-                )
-        );
-        savedCustomer.setFName(customer.getFName());
-        savedCustomer.setLName(customer.getLName());
+        Customer savedCustomer = customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer with id: " + id + " not found."));
+        savedCustomer.setFirstName(customer.getFirstName());
+        savedCustomer.setLastName(customer.getLastName());
         savedCustomer.setAddress(customer.getAddress());
         savedCustomer.setContact(customer.getContact());
         savedCustomer.setAge(customer.getAge());
