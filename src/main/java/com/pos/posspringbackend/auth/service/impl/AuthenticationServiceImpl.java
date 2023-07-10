@@ -69,6 +69,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
+                .userId(String.valueOf(user.getId()))
                 .build();
     }
 
