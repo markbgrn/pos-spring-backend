@@ -70,6 +70,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .userId(String.valueOf(user.getId()))
+                .role(String.valueOf(user.getRole()))
                 .build();
     }
 
