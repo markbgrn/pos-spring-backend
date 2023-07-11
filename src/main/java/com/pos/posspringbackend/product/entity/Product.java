@@ -23,7 +23,7 @@ public class Product {
     @Column(name="unitPrice")
     private Double unitPrice;
     private Integer quantity;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoryID")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id")
     private Category category;
 }

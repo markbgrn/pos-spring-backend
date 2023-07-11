@@ -32,23 +32,23 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category findById(Long id) {
-        Optional<Category> category = categoryRepository.findById(id);
+    public Category findById(Integer id) {
+        Optional<Category> category = categoryRepository.findById(id.longValue());
         return category.orElseThrow(() -> new ResourceNotFoundException("Category with id: " + id + " not found"));
     }
 
     @Override
-    public Category update(Long id, Category category) {
-        Category savedCategory = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category with id: " + id + " not found"));
+    public Category update(Integer id, Category category) {
+        Category savedCategory = categoryRepository.findById(id.longValue()).orElseThrow(() -> new ResourceNotFoundException("Category with id: " + id + " not found"));
         savedCategory.setCategoryName(category.getCategoryName());
         savedCategory.setCategoryDesc(category.getCategoryDesc());
         return categoryRepository.save(savedCategory);
     }
 
     @Override
-    public boolean delete(Long id) {
-        if (categoryRepository.existsById(id)) {
-            categoryRepository.deleteById(id);
+    public boolean delete(Integer id) {
+        if (categoryRepository.existsById(id.longValue())) {
+            categoryRepository.deleteById(id.longValue());
             return true;
         }
         return false;
