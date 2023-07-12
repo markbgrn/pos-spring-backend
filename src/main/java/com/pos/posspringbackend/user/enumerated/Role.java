@@ -33,7 +33,6 @@ public enum Role {
     ),
     INVENTORY_CLERK(
             Set.of(
-                    ADMIN_READ,
                     INVENTORY_CLERK_READ,
                     INVENTORY_CLERK_CREATE,
                     INVENTORY_CLERK_UPDATE
@@ -41,7 +40,6 @@ public enum Role {
     ),
     CASHIER(
             Set.of(
-                    INVENTORY_CLERK_READ,
                     CASHIER_READ,
                     CASHIER_CREATE,
                     CASHIER_UPDATE
