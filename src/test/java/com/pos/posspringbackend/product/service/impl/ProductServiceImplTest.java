@@ -1,6 +1,7 @@
 package com.pos.posspringbackend.product.service.impl;
 
 import com.pos.posspringbackend.category.entity.Category;
+import com.pos.posspringbackend.category.repository.CategoryRepository;
 import com.pos.posspringbackend.product.entity.Product;
 import com.pos.posspringbackend.product.repository.ProductRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -12,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -19,6 +21,8 @@ import static org.mockito.Mockito.*;
 class ProductServiceImplTest {
     @Mock
     private ProductRepository productRepository;
+    @Mock
+    private CategoryRepository categoryRepository;
     @InjectMocks
     private ProductServiceImpl productServiceImpl;
 
@@ -85,6 +89,7 @@ class ProductServiceImplTest {
                 .build();
         //when
         when(productRepository.save(product)).thenReturn(product);
+        when(categoryRepository.findById(category.getId())).thenReturn(Optional.of(category));
         //then
         Product savedProduct = productServiceImpl.createProduct(product);
         assertEquals("Sample Product", savedProduct.getProdName());

@@ -1,5 +1,7 @@
 package com.pos.posspringbackend.product.service.impl;
 
+import com.pos.posspringbackend.category.entity.Category;
+import com.pos.posspringbackend.category.repository.CategoryRepository;
 import com.pos.posspringbackend.product.entity.Product;
 import com.pos.posspringbackend.product.repository.ProductRepository;
 import com.pos.posspringbackend.product.service.ProductService;
@@ -14,6 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public List<Product> getAllProducts() {
@@ -22,6 +25,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product createProduct(Product product) {
+        Category category = categoryRepository.findById(product.getCategory().getId()).get();
+        product.setCategory(category);
         Product savedProduct = Product.builder()
                 .prodId(product.getProdId())
                 .prodName(product.getProdName())

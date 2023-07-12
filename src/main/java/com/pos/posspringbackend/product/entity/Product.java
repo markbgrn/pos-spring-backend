@@ -24,6 +24,6 @@ public class Product {
     private Double unitPrice;
     private Integer quantity;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "category_id")
     private Category category;
 }

@@ -23,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
-    public Category create(Category category) {
+    public Category createCategory(Category category) {
         Category savedCategory = Category.builder()
                 .categoryName(category.getCategoryName())
                 .categoryDesc(category.getCategoryDesc())
@@ -32,14 +32,14 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category findById(Integer id) {
-        Optional<Category> category = categoryRepository.findById(id.longValue());
+    public Category findCategoryById(Integer id) {
+        Optional<Category> category = categoryRepository.findById(id);
         return category.orElseThrow(() -> new ResourceNotFoundException("Category with id: " + id + " not found"));
     }
 
     @Override
     public Category update(Integer id, Category category) {
-        Category savedCategory = categoryRepository.findById(id.longValue()).orElseThrow(() -> new ResourceNotFoundException("Category with id: " + id + " not found"));
+        Category savedCategory = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category with id: " + id + " not found"));
         savedCategory.setCategoryName(category.getCategoryName());
         savedCategory.setCategoryDesc(category.getCategoryDesc());
         return categoryRepository.save(savedCategory);
@@ -47,8 +47,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public boolean delete(Integer id) {
-        if (categoryRepository.existsById(id.longValue())) {
-            categoryRepository.deleteById(id.longValue());
+        if (categoryRepository.existsById(id)) {
+            categoryRepository.deleteById(id);
             return true;
         }
         return false;

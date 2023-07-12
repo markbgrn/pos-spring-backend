@@ -4,6 +4,7 @@ import com.pos.posspringbackend.category.entity.Category;
 import com.pos.posspringbackend.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,12 +27,12 @@ public class CategoryController {
     }
     @PostMapping("/create")
     public ResponseEntity<Category> create(@RequestBody Category category) {
-        Category savedCategory = categoryService.create(category);
+        Category savedCategory = categoryService.createCategory(category);
         return new ResponseEntity<>(savedCategory, CREATED);
     }
     @GetMapping("/{id}")
     public ResponseEntity<Category> findById(@PathVariable Integer id) {
-        Category category = categoryService.findById(id);
+        Category category = categoryService.findCategoryById(id);
         return new ResponseEntity<>(category, OK);
     }
     @PutMapping("/{id}")

@@ -5,13 +5,14 @@ import com.pos.posspringbackend.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/product")
-@CrossOrigin(origins = "localhost:4200")
+@PreAuthorize("hasRole('ADMIN')" + "|| hasRole('INVENTORY_CLERK')")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;

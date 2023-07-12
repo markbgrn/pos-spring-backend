@@ -65,10 +65,10 @@ class CategoryServiceImplTest {
                 .categoryName("Sample Category")
                 .categoryDesc("Sample Description")
                 .build();
-        //when
+        // when
         when(categoryRepository.save(category)).thenReturn(category);
-        //then
-        Category savedCategory = categoryServiceImpl.create(category);
+        // then
+        Category savedCategory = categoryServiceImpl.createCategory(category);
         assertEquals("Sample Category", savedCategory.getCategoryName());
         assertEquals("Sample Description", savedCategory.getCategoryDesc());
         verify(categoryRepository, times(1)).save(category);
@@ -82,12 +82,12 @@ class CategoryServiceImplTest {
                 .categoryDesc("Sample Description")
                 .build();
         // when
-        when(categoryRepository.findById(1L)).thenReturn(java.util.Optional.of(category));
+        when(categoryRepository.findById(category.getId())).thenReturn(java.util.Optional.of(category));
         // then
-        Category categoryFromService = categoryServiceImpl.findById(1L);
+        Category categoryFromService = categoryServiceImpl.findCategoryById(category.getId());
         assertEquals("Sample Category", categoryFromService.getCategoryName());
         assertEquals("Sample Description", categoryFromService.getCategoryDesc());
-        verify(categoryRepository, times(1)).findById(1L);
+        verify(categoryRepository, times(1)).findById(category.getId());
     }
 
     @Test
@@ -102,20 +102,20 @@ class CategoryServiceImplTest {
                 .categoryDesc("Sample Description 2")
                 .build();
         // when
-        when(categoryRepository.findById(1L)).thenReturn(java.util.Optional.of(category));
+        when(categoryRepository.findById(category.getId())).thenReturn(java.util.Optional.of(category));
         when(categoryRepository.save(category)).thenReturn(category2);
         // then
-        Category updatedCategory = categoryServiceImpl.update(1L, category);
+        Category updatedCategory = categoryServiceImpl.update(category.getId(), category);
         assertEquals("Sample Category 2", updatedCategory.getCategoryName());
         assertEquals("Sample Description 2", updatedCategory.getCategoryDesc());
-        verify(categoryRepository, times(1)).findById(1L);
+        verify(categoryRepository, times(1)).findById(category.getId());
         verify(categoryRepository, times(1)).save(category);
     }
 
     @Test
     void it_Should_Delete_Category_By_Id() {
        //given
-        long id = 1L;
+        int id = 1;
         //when
         when(categoryRepository.existsById(id)).thenReturn(true);
         //then
@@ -129,7 +129,7 @@ class CategoryServiceImplTest {
     @Test
     void it_Should_Not_Delete_Category_By_Id() {
         //given
-        long id = 1L;
+        int id = 1;
         //when
         when(categoryRepository.existsById(id)).thenReturn(false);
         //then
