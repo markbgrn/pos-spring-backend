@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
                 .password(user.getPassword())
                 .email(user.getEmail())
                 .role(user.getRole())
-                .tokens(user.getTokens())
+                .tokens(new ArrayList<>())
                 .build();
         return userRepository.save(savedUser);
     }
@@ -55,7 +55,6 @@ public class UserServiceImpl implements UserService {
         savedUser.setPassword(user.getPassword());
         savedUser.setEmail(user.getEmail());
         savedUser.setRole(user.getRole());
-        savedUser.setTokens(user.getTokens());
         return userRepository.save(savedUser);
     }
 
