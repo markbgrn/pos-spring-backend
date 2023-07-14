@@ -1,5 +1,9 @@
 package com.pos.posspringbackend.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.pos.posspringbackend.employee.entity.Employee;
 import com.pos.posspringbackend.token.entity.Token;
 import com.pos.posspringbackend.user.enumerated.Role;
 import lombok.AllArgsConstructor;
@@ -16,6 +20,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Data
@@ -28,14 +34,15 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-    private String firstName;
-    private String lastName;
     private String password;
     private String email;
     @Enumerated(EnumType.STRING)
     private Role role;   // ROLE_USER, ROLE_ADMIN, ROLE_INVENTORY_CLERK, ROLE_CASHIER
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Token> tokens;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Employee employee;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return role.getAuthorities();

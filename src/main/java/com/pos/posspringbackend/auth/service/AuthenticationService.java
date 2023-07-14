@@ -5,7 +5,7 @@ import com.pos.posspringbackend.auth.request.RegisterRequest;
 import com.pos.posspringbackend.auth.response.AuthenticationResponse;
 
 public interface AuthenticationService {
-    AuthenticationResponse register(RegisterRequest request);
+    void register(RegisterRequest request);
 
     AuthenticationResponse authenticate(AuthenticationRequest request);
 }

@@ -58,6 +58,12 @@ public class SecurityConfiguration {
                 .antMatchers(POST,"/api/v1/category/**").hasAnyAuthority(ADMIN_CREATE.name(), INVENTORY_CLERK_CREATE.name())
                 .antMatchers(PUT,"/api/v1/category/**").hasAnyAuthority(ADMIN_UPDATE.name(), INVENTORY_CLERK_UPDATE.name())
                 .antMatchers(DELETE,"/api/v1/category/**").hasAuthority(ADMIN_DELETE.name())
+                // admin only
+                .antMatchers("/api/v1/employees/**").hasRole(ADMIN.name())
+                .antMatchers(GET,"/api/v1/employees/**").hasAuthority(ADMIN_READ.name())
+                .antMatchers(POST,"/api/v1/employees/**").hasAuthority(ADMIN_CREATE.name())
+                .antMatchers(PUT,"/api/v1/employees/**").hasAuthority(ADMIN_UPDATE.name())
+                .antMatchers(DELETE,"/api/v1/employees/**").hasAuthority(ADMIN_DELETE.name())
                 .anyRequest()
                 .authenticated()
                 .and()

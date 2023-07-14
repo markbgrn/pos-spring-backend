@@ -35,31 +35,19 @@ class EmployeeServiceImplTest {
     void itShouldFindAllEmployeesWithAccounts() {
         // given
         Employee employee = Employee.builder()
-                .employeeId(1)
                 .firstName("John")
                 .lastName("Doe")
                 .address("123 Main St")
-                .username("jdoe")
-                .password("password")
-                .userType(Role.ADMIN)
                 .build();
         Employee employee1 = Employee.builder()
-                .employeeId(2)
                 .firstName("Jane")
                 .lastName("Doe")
                 .address("123 Main St")
-                .username("jdoe")
-                .password("password")
-                .userType(Role.INVENTORY_CLERK)
                 .build();
         Employee employee2 = Employee.builder()
-                .employeeId(3)
                 .firstName("John")
                 .lastName("Smith")
                 .address("123 Main St")
-                .username("jsmith")
-                .password("password")
-                .userType(Role.CASHIER)
                 .build();
         // when
         List<Employee> employees = List.of(employee, employee1, employee2);
@@ -70,22 +58,12 @@ class EmployeeServiceImplTest {
         assertEquals("John", employeesFromService.get(0).getFirstName());    // check if the first element is the same as the first element of the list
         assertEquals("Doe", employeesFromService.get(0).getLastName());  // check if the first element is the same as the first element of the list
         assertEquals("123 Main St", employeesFromService.get(0).getAddress());  // check if the first element is the same as the first element of the list
-        assertEquals("jdoe", employeesFromService.get(0).getUsername());  // check if the first element is the same as the first element of the list
-        assertEquals("password", employeesFromService.get(0).getPassword());  // check if the first element is the same as the first element of the list
-        assertEquals(Role.ADMIN, employeesFromService.get(0).getUserType());  // check if the first element is the same as the first element of the list
         assertEquals("Jane", employeesFromService.get(1).getFirstName());    // check if the first element is the same as the first element of the list
         assertEquals("Doe", employeesFromService.get(1).getLastName());  // check if the first element is the same as the first element of the list
         assertEquals("123 Main St", employeesFromService.get(1).getAddress());  // check if the first element is the same as the first element of the list
-        assertEquals("jdoe", employeesFromService.get(1).getUsername());  // check if the first element is the same as the first element of the list
-        assertEquals("password", employeesFromService.get(1).getPassword());  // check if the first element is the same as the first element of the list
-        assertEquals(Role.INVENTORY_CLERK, employeesFromService.get(1).getUserType());  // check if the first element is the same as the first element of the list
         assertEquals("John", employeesFromService.get(2).getFirstName());    // check if the first element is the same as the first element of the list
         assertEquals("Smith", employeesFromService.get(2).getLastName());  // check if the first element is the same as the first element of the list
         assertEquals("123 Main St", employeesFromService.get(2).getAddress());  // check if the first element is the same as the first element of the list
-        assertEquals("jsmith", employeesFromService.get(2).getUsername());  // check if the first element is the same as the first element of the list
-        assertEquals("password", employeesFromService.get(2).getPassword());  // check if the first element is the same as the first element of the list
-        assertEquals(Role.CASHIER, employeesFromService.get(2).getUserType());  // check if the first element is the same as the first element of the list
-
         verify(employeeRepository, times(1)).findAll();
     }
 
@@ -93,13 +71,10 @@ class EmployeeServiceImplTest {
     void itShouldCreateEmployeeWithAccount() {
         // given
         Employee employee = Employee.builder()
-                .employeeId(1)
+                .id(1)
                 .firstName("John")
                 .lastName("Doe")
                 .address("123 Main St")
-                .username("jdoe")
-                .password("password")
-                .userType(Role.ADMIN)
                 .build();
         // when
         when(employeeRepository.save(employee)).thenReturn(employee);
@@ -108,9 +83,6 @@ class EmployeeServiceImplTest {
         assertEquals("John", employeeFromService.getFirstName());    // check if the first element is the same as the first element of the list
         assertEquals("Doe", employeeFromService.getLastName());  // check if the first element is the same as the first element of the list
         assertEquals("123 Main St", employeeFromService.getAddress());  // check if the first element is the same as the first element of the list
-        assertEquals("jdoe", employeeFromService.getUsername());  // check if the first element is the same as the first element of the list
-        assertEquals("password", employeeFromService.getPassword());  // check if the first element is the same as the first element of the list
-        assertEquals(Role.ADMIN, employeeFromService.getUserType());  // check if the first element is the same as the first element of the list
 
         verify(employeeRepository, times(1)).save(employee);
     }
@@ -119,13 +91,9 @@ class EmployeeServiceImplTest {
     void itShouldFindEmployeeById() {
         // given
         Employee employee = Employee.builder()
-                .employeeId(1)
                 .firstName("John")
                 .lastName("Doe")
                 .address("123 Main St")
-                .username("jdoe")
-                .password("password")
-                .userType(Role.ADMIN)
                 .build();
         // when
         when(employeeRepository.findById(1)).thenReturn(Optional.of(employee));
@@ -134,9 +102,6 @@ class EmployeeServiceImplTest {
         assertEquals("John", employeeFromService.getFirstName());    // check if the first element is the same as the first element of the list
         assertEquals("Doe", employeeFromService.getLastName());  // check if the first element is the same as the first element of the list
         assertEquals("123 Main St", employeeFromService.getAddress());  // check if the first element is the same as the first element of the list
-        assertEquals("jdoe", employeeFromService.getUsername());  // check if the first element is the same as the first element of the list
-        assertEquals("password", employeeFromService.getPassword());  // check if the first element is the same as the first element of the list
-        assertEquals(Role.ADMIN, employeeFromService.getUserType());  // check if the first element is the same as the first element of the list
 
         verify(employeeRepository, times(1)).findById(1);
     }
@@ -145,22 +110,14 @@ class EmployeeServiceImplTest {
     void itShouldUpdateEmployeeDetails() {
         //given
         Employee employee = Employee.builder()
-                .employeeId(1)
                 .firstName("John")
                 .lastName("Doe")
                 .address("123 Main St")
-                .username("jdoe")
-                .password("password")
-                .userType(Role.ADMIN)
                 .build();
         Employee updatedEmployee = Employee.builder()
-                .employeeId(1)
                 .firstName("Jane")
                 .lastName("Doe")
                 .address("123 Main St")
-                .username("jdoe")
-                .password("password")
-                .userType(Role.ADMIN)
                 .build();
         //when
         when(employeeRepository.findById(1)).thenReturn(Optional.of(employee));
@@ -170,9 +127,6 @@ class EmployeeServiceImplTest {
         assertEquals("Jane", employeeFromService.getFirstName());    // check if the first element is the same as the first element of the list
         assertEquals("Doe", employeeFromService.getLastName());  // check if the first element is the same as the first element of the list
         assertEquals("123 Main St", employeeFromService.getAddress());  // check if the first element is the same as the first element of the list
-        assertEquals("jdoe", employeeFromService.getUsername());  // check if the first element is the same as the first element of the list
-        assertEquals("password", employeeFromService.getPassword());  // check if the first element is the same as the first element of the list
-        assertEquals(Role.ADMIN, employeeFromService.getUserType());  // check if the first element is the same as the first element of the list
 
         verify(employeeRepository, times(1)).findById(1);
         verify(employeeRepository, times(1)).save(updatedEmployee);

@@ -1,5 +1,7 @@
 package com.pos.posspringbackend.token.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pos.posspringbackend.token.enumerated.TokenType;
 import com.pos.posspringbackend.user.entity.User;
 import lombok.AllArgsConstructor;
@@ -28,5 +30,6 @@ public class Token {
     private Boolean revoked;
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 }

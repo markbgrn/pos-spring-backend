@@ -6,17 +6,17 @@ import com.pos.posspringbackend.auth.request.RegisterRequest;
 import com.pos.posspringbackend.auth.response.AuthenticationResponse;
 import com.pos.posspringbackend.auth.service.AuthenticationService;
 import com.pos.posspringbackend.config.JwtService;
+import com.pos.posspringbackend.employee.entity.Employee;
+import com.pos.posspringbackend.employee.service.EmployeeService;
 import com.pos.posspringbackend.token.entity.Token;
 import com.pos.posspringbackend.token.enumerated.TokenType;
 import com.pos.posspringbackend.token.repository.TokenRepository;
-import com.pos.posspringbackend.user.enumerated.Role;
 import com.pos.posspringbackend.user.entity.User;
 import com.pos.posspringbackend.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,24 +33,27 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final EmployeeService employeeService;
 
     @Override
-    public AuthenticationResponse register(RegisterRequest request) {
+    public void register(RegisterRequest request) {
         User user = User.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole())
                 .build();
-        User saveduser = userRepository.save(user);
-        String jwtToken = jwtService.generateToken(user);
-        String refreshToken = jwtService.generateRefreshToken(user);
-        savedUserToken(saveduser, jwtToken);
-        return AuthenticationResponse.builder()
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
-                .build();
+        Employee employee = request.getEmployee();
+        user.setEmployee(employee);
+        employee.setUser(user);
+        userRepository.save(user);
+        employeeService.createEmployee(employee);
+//        String jwtToken = jwtService.generateToken(user);
+//        String refreshToken = jwtService.generateRefreshToken(user);
+//        savedUserToken(saveduser, jwtToken);
+//        return AuthenticationResponse.builder()
+//                .accessToken(jwtToken)
+//                .refreshToken(refreshToken)
+//                .build();
     }
 
     @Override

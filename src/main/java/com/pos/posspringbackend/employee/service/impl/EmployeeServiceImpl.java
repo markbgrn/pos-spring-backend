@@ -24,16 +24,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     @Transactional
     public Employee createEmployee(Employee employee) {
-        Employee savedEmployee = Employee.builder()
-                .employeeId(employee.getEmployeeId())
-                .firstName(employee.getFirstName())
-                .lastName(employee.getLastName())
-                .address(employee.getAddress())
-                .username(employee.getUsername())
-                .password(employee.getPassword())
-                .userType(employee.getUserType())
-                .build();
-        return employeeRepository.save(savedEmployee);
+//        Employee savedEmployee = Employee.builder()
+//                .firstName(employee.getFirstName())
+//                .lastName(employee.getLastName())
+//                .gender(employee.getGender())
+//                .dateOfBirth(employee.getDateOfBirth())
+//                .phone(employee.getPhone())
+//                .address(employee.getAddress())
+//                .zipCode(employee.getZipCode())
+//                .build();
+        return employeeRepository.save(employee);
     }
 
     @Override
@@ -47,10 +47,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee savedEmployee = employeeRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee with id: " + id + " not found"));
         savedEmployee.setFirstName(employee.getFirstName());
         savedEmployee.setLastName(employee.getLastName());
+        savedEmployee.setGender(employee.getGender());
+        savedEmployee.setDateOfBirth(employee.getDateOfBirth());
+        savedEmployee.setPhone(employee.getPhone());
         savedEmployee.setAddress(employee.getAddress());
-        savedEmployee.setUsername(employee.getUsername());
-        savedEmployee.setPassword(employee.getPassword());
-        savedEmployee.setUserType(employee.getUserType());
+        savedEmployee.setZipCode(employee.getZipCode());
         return employeeRepository.save(savedEmployee);
     }
 
