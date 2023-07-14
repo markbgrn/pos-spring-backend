@@ -20,8 +20,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User createUser(User user) {
         User savedUser = User.builder()
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
                 .password(user.getPassword())
                 .email(user.getEmail())
                 .role(user.getRole())
@@ -50,8 +48,6 @@ public class UserServiceImpl implements UserService {
                         "User with id " + id + " not found"
                 )
         );
-        savedUser.setFirstName(user.getFirstName());
-        savedUser.setLastName(user.getLastName());
         savedUser.setPassword(user.getPassword());
         savedUser.setEmail(user.getEmail());
         savedUser.setRole(user.getRole());
