@@ -4,6 +4,8 @@ import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Data
@@ -24,4 +26,10 @@ public class Customer {
     private String address;
     private String contact;
     private Integer age;
+    private BigDecimal creditedAmount;
+    private Boolean status;
+    private LocalDate dueDate;
+    private LocalDate createdDate;
+
+
 }

@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,15 +27,23 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional
     public Customer createCustomer(Customer customer) {
-        Customer savedCustomer = Customer.builder()
-                .customerId(customer.getCustomerId())
-                .firstName(customer.getFirstName())
-                .lastName(customer.getLastName())
-                .address(customer.getAddress())
-                .contact(customer.getContact())
-                .age(customer.getAge())
-                .build();
-        return customerRepository.save(savedCustomer);
+        customer.setCreatedDate(LocalDate.now());
+
+        if (customer.getAge() < 18) {
+            throw new IllegalArgumentException("Customer must be 18 years or older to qualify for credit.");
+        }
+
+        BigDecimal creditedAmount = customer.getCreditedAmount();
+        if (creditedAmount != null && creditedAmount.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("The credited amount cannot be negative.");
+        }
+
+        LocalDate dueDate = LocalDate.now().with(TemporalAdjusters.lastDayOfMonth());
+        customer.setDueDate(dueDate);
+
+        customer.setStatus(false);
+
+        return customerRepository.save(customer);
     }
 
     @Override
@@ -44,11 +55,15 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer updateCustomer(Integer id, Customer customer) {
         Customer savedCustomer = customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer with id: " + id + " not found."));
+        if (customer.getAge() < 18) {
+            throw new IllegalArgumentException("Customer must be 18 years or older to qualify for credit.");
+        }
         savedCustomer.setFirstName(customer.getFirstName());
         savedCustomer.setLastName(customer.getLastName());
         savedCustomer.setAddress(customer.getAddress());
         savedCustomer.setContact(customer.getContact());
         savedCustomer.setAge(customer.getAge());
+        savedCustomer.setStatus(customer.getStatus());
         return customerRepository.save(savedCustomer);
     }
 

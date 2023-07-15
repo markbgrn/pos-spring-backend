@@ -11,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/customer")
-@CrossOrigin(origins = "localhost:4200")
 @RequiredArgsConstructor
 public class CustomerController {
     private final CustomerService customerService;
@@ -34,7 +33,7 @@ public class CustomerController {
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Customer> update(
             @PathVariable Integer id, @RequestBody Customer customer
     ) {
@@ -42,7 +41,7 @@ public class CustomerController {
         return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Boolean> delete (@PathVariable Integer id) {
         boolean isDeleted = customerService.deleteCustomer(id);
         return new ResponseEntity<>(isDeleted, HttpStatus.OK);
