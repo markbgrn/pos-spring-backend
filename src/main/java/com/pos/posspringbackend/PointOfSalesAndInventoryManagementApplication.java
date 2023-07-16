@@ -33,8 +33,8 @@ public class PointOfSalesAndInventoryManagementApplication implements CommandLin
     @Override
     public void run(String... args) throws Exception {
         // Clean up database tables
-        employeeRepository.deleteAllInBatch();
-        userRepository.deleteAllInBatch();
+//        employeeRepository.deleteAllInBatch();
+//        userRepository.deleteAllInBatch();
 
         Calendar dateOfBirth = Calendar.getInstance();
         dateOfBirth.set(1969, Calendar.JANUARY, 1);
