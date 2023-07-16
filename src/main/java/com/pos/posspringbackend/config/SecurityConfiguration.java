@@ -64,6 +64,12 @@ public class SecurityConfiguration {
                 .antMatchers(POST,"/api/v1/employees/**").hasAuthority(ADMIN_CREATE.name())
                 .antMatchers(PUT,"/api/v1/employees/**").hasAuthority(ADMIN_UPDATE.name())
                 .antMatchers(DELETE,"/api/v1/employees/**").hasAuthority(ADMIN_DELETE.name())
+                //CASHIER and ADMIN
+                .antMatchers("/api/v1/customer/**").hasAnyRole(ADMIN.name(),CASHIER.name())
+                .antMatchers(GET,"/api/v1/customer/**").hasAnyAuthority(ADMIN_READ.name(),CASHIER_READ.name())
+                .antMatchers(POST,"/api/v1/customer/**").hasAnyAuthority(ADMIN_CREATE.name(),CASHIER_CREATE.name())
+                .antMatchers(PUT,"/api/v1/customer/**").hasAnyAuthority(ADMIN_UPDATE.name(),CASHIER_UPDATE.name())
+                .antMatchers(DELETE,"/api/v1/customer/**").hasAnyAuthority(ADMIN_DELETE.name(),CASHIER_DELETE.name())
                 .anyRequest()
                 .authenticated()
                 .and()
