@@ -34,7 +34,7 @@ public class EmployeeController {
         Employee employee = employeeService.findById(id);
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<Employee> update(
             @PathVariable Integer id, @RequestBody Employee employee
