@@ -35,12 +35,12 @@ public class CategoryController {
         Category category = categoryService.findCategoryById(id);
         return new ResponseEntity<>(category, OK);
     }
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Category> update(@PathVariable Integer id, @RequestBody Category category) {
         Category updatedCategory = categoryService.update(id, category);
         return new ResponseEntity<>(updatedCategory, OK);
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable Integer id) {
         boolean isDeleted = categoryService.delete(id);
         return new ResponseEntity<>(isDeleted, OK);

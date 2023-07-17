@@ -33,7 +33,7 @@ public class Product {
     @NotNull(message = "Quantity is required")
     private Integer quantity;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id",updatable = true)
     @NotNull(message = "Category is required")
     private Category category;
 }

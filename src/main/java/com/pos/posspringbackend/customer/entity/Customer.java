@@ -5,6 +5,7 @@ import org.hibernate.proxy.HibernateProxy;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -33,7 +34,7 @@ public class Customer {
     @NotBlank(message = "Contact is required")
     private String contact;
     @Column(name="age", nullable = false, length = 11)
-    @NotBlank(message = "Age is required")
+    @NotNull(message = "Age is required")
     private Integer age;
     @Column(name="credit_amount", nullable = false, precision = 10, scale = 2)
     private BigDecimal creditedAmount;
