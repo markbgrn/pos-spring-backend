@@ -35,7 +35,7 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Product> update(
             @PathVariable Integer id, @RequestBody Product product
     ) {
@@ -43,7 +43,7 @@ public class ProductController {
         return new ResponseEntity<>(updatedProduct, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable Integer id) {
         boolean isDeleted = productService.delete(id);
         return new ResponseEntity<>(isDeleted, HttpStatus.OK);
