@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
@@ -43,17 +44,17 @@ public class Employee{
     private String phone;
 
     @Enumerated(EnumType.STRING)
-    @NotBlank(message = "Gender is required")
+    @NotNull(message = "Gender is required")
     private Gender gender;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "date_of_birth")
-    @NotBlank(message = "Date of birth is required")
+    @NotNull(message = "Date of birth is required")
     private Date dateOfBirth;
 
     @Column(name = "zip_code")
     @Size(max = 4)
-    @NotBlank(message = "Zip code is required")
+    @NotNull(message = "Zip code is required")
     private String zipCode;
 
     @OneToOne
