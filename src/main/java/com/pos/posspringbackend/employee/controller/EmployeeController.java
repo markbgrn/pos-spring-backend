@@ -5,12 +5,14 @@ import com.pos.posspringbackend.employee.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/employees")
+@PreAuthorize("hasRole('ADMIN')")
 @RequiredArgsConstructor
 public class EmployeeController {
     private final EmployeeService employeeService;
@@ -33,7 +35,7 @@ public class EmployeeController {
         return new ResponseEntity<>(employee, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Employee> update(
             @PathVariable Integer id, @RequestBody Employee employee
     ) {
@@ -41,7 +43,7 @@ public class EmployeeController {
         return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable Integer id) {
         boolean isDeleted = employeeService.delete(id);
         return new ResponseEntity<>(isDeleted, HttpStatus.OK);
