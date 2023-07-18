@@ -18,14 +18,18 @@ import javax.persistence.IdClass;
 @Document(collection="order_details")
 @IdClass(OrderDetailsId.class)
 public class OrderDetailsDocument {
+//    @Id
+//    @Column(name="orderID")
+//    private String orderId;
     @Id
-    @Column(name="orderID")
-    private Integer orderId;
-    @Id
+    private String id;
     @Column(name="prodID")
-    private Integer productId;
-    @Column(name="unitPrice")
-    private Double unitPrice;
-    private Integer quantity;
-    private Double discount;
+    private String productId;
+    @Column(name="customer_id")
+    private String customerId;
+    @Column(name="amount")
+    private String amount;
+    private String quantity;
+    private String paymentMethod;
+//    private Double discount;
 }

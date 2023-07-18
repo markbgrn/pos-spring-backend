@@ -6,6 +6,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface OrderDetailsRepository extends MongoRepository<OrderDetailsDocument, OrderDetailsId> {
-    List<OrderDetailsDocument> findByOrderId(Integer id);
+public interface OrderDetailsRepository extends MongoRepository<OrderDetailsDocument, String> {
+//    List<OrderDetailsDocument> findByOrderId(Integer id);
 }
