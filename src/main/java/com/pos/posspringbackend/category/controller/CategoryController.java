@@ -40,6 +40,7 @@ public class CategoryController {
         Category updatedCategory = categoryService.update(id, category);
         return new ResponseEntity<>(updatedCategory, OK);
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable Integer id) {
         boolean isDeleted = categoryService.delete(id);

@@ -74,6 +74,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .refreshToken(refreshToken)
                 .userId(String.valueOf(user.getId()))
                 .role(String.valueOf(user.getRole()))
+                .permissions(String.valueOf(user.getRole().getPermissions()))
                 .build();
     }
 
